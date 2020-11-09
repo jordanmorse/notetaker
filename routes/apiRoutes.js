@@ -1,31 +1,26 @@
 const router = require("express").Router()
-const notes = require("../db/db.json")
+const db = require("../db/db.json")
 const fs = require("fs")
-
+const {v4: uuidv4} = require("uuid")
+const edit = require("../db/editNotes.js")
 
 router.get("/notes", (req, res) => {
-    res.json(notes);
+   edit
+    .getNotes()
+    .then(notes => res.json(notes))
+    .catch(err => res.status(500).json(err));
 })
 
 router.post("/notes", (req, res) => {
-    var body = req.body;
-    notes.push(body);
-    fs.writeFile("./db/db.json", JSON.stringify(notes), (err, data) => {
-        if (err) throw (err)
-        else {res.json(body)}
-    })
+    edit
+    .addNote(req.body)
+    .then((note) => res.json(note))
+    .catch(err => res.status(500).json(err));
 })
 
 router.delete("/notes/:id", (req, res) => {
-    req.params.id
-    //don't use index
-    //add ids to db.json and post route
-    //once you figure out how you add ids, add to post
-    //write a for loop that looks for specfic id
-    //if notes[i].id = req.params.id (.splice())
-    //write file with new notes
-    //res.send(notes)
-    //npm package for ids
+    edit
+    .removeNote(req.params.id)
 })
 
 module.exports = router
