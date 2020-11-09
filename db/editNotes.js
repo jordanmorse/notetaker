@@ -1,12 +1,13 @@
 const util = require("util");
 const fs = require("fs");
 
-// This package will be used to generate our unique ids. https://www.npmjs.com/package/uuid
+//uuid package for IDs
 const {v4: uuidv4} = require("uuid");
 
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
+//creating an edit notes class with functions necessary to run the app inside
 class editNotes {
   read() {
     return readFileAsync("db/db.json", "utf8");
@@ -16,12 +17,13 @@ class editNotes {
     return writeFileAsync("db/db.json", JSON.stringify(note));
   }
 
+  //takes notes from db.json file and creates an array
   getNotes() {
     return this.read().then((notes) => {
-        // here you will write a function that uses the above read function and parses the notes from the file 
+     
       let cleanedNotes;
 
-      // If notes isn't an array or can't be turned into one, send back a new empty array
+      
      try{
         cleanedNotes = [].concat(JSON.parse(notes));
      }catch(err){
@@ -33,6 +35,7 @@ class editNotes {
     
   }
 
+  //function to push new notes with appropriate values into the notes array/creates an ID
   addNote(note) {
     
     const{title, text} = note
@@ -54,6 +57,7 @@ class editNotes {
 
   }
 
+  //function to delete notes
     removeNote(id) {
       return this.getNotes()
       .then(notes => notes.filter(note => note.id !== id))
