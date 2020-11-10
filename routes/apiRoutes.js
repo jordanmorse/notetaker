@@ -20,7 +20,7 @@ router.post("/notes", (req, res) => {
     .catch(err => res.status(500).json(err));
 })
 
-//running the function to remove a selected note
+//running the function to remove a selected note. note deletes on page refresh
 router.delete("/notes/:id", (req, res) => {
     edit
     .removeNote(req.params.id)
