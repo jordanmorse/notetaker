@@ -6,7 +6,7 @@ This application uses Javascript and Node.js to create a note-taking website tha
 
 Github repository: https://github.com/jordanmorse/notetaker
 
-Deployed via Heroku: 
+Deployed via Heroku: https://peaceful-escarpment-78850.herokuapp.com/
 
 ## Installation
 
